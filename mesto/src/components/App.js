@@ -15,7 +15,6 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false)
 
-
   const closeOnEsc = (event) => {
     if (event.key === "Escape") {
       closeAllPopups();
@@ -84,14 +83,12 @@ function App() {
       isOpen={isEditAvatarPopupOpen}
       onClose={closeAllPopups}
     />
-    <ImagePopup>
+    <ImagePopup
       card={selectedCard}
-      onClose={closeAllPopups}
+      onClose={closeAllPopups}>
     </ImagePopup>
     <Footer/>
   </>)
-
-
 }
 
 export default App;
