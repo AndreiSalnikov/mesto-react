@@ -1,13 +1,14 @@
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup(props) {
+function EditAvatarPopup({isOpen,onClose}) {
   return (
     <PopupWithForm
-      name={'editAvatarForm'}
-      id={'popupEditAvatar'}
-      title={'Обновить аватар'}
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      name='editAvatarForm'
+      id='popupEditAvatar'
+      title='Обновить аватар'
+      textOnButton='Сохранить'
+      isOpen={isOpen}
+      onClose={onClose}
     >
       <input
         type="url"

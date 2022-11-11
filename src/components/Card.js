@@ -1,17 +1,17 @@
-function Card(props) {
+function Card({card,onCardClick,onTrashClick}) {
 
   function handleClick() {
-    props.onCardClick(props.card);
+    onCardClick(card);
   }
 
   return (<article className="item">
-      <button className="item__delete-img" id="trash"></button>
-      <img src={props.card.link} id="photoGridImg" className="item__img" alt="картинка" onClick={handleClick}/>
+      <button className="item__delete-img" id="trash" onClick={onTrashClick}></button>
+      <img src={card.link} id="photoGridImg" className="item__img" alt="картинка" onClick={handleClick}/>
       <div className="item__group-icon">
-        <h2 className="item__text">{props.card.name}</h2>
+        <h2 className="item__text">{card.name}</h2>
         <div className="item__like-container">
           <button className="item__icon" id="like"></button>
-          <div className="item__like-counter">{props.card.likes.length}</div>
+          <div className="item__like-counter">{card.likes.length}</div>
         </div>
       </div>
     </article>)
