@@ -45,8 +45,7 @@ function App() {
     setSelectedCard(null);
   }
 
-  return (
-  <>
+  return (<>
     <Header/>
     <Main
       onEditProfile={handleEditProfileClick}

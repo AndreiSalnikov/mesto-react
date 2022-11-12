@@ -3,7 +3,7 @@ import {api} from '../utils/api'
 import {userPath, cardsPath} from '../utils/utils'
 import Card from "./Card";
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick,onTrashClick}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashClick}) {
   const [userName, setUserName] = React.useState("Загрузка...")
   const [userDescription, setUserDescription] = React.useState("Загрузка...")
   const [userAvatar, setUserAvatar] = React.useState("https://www.meme-arsenal.com/memes/9836e485f044f8566194374d7566cfe8.jpg")
@@ -36,10 +36,10 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick,onTrashClick
 
     <section className="photo-grid">
       {cards.map((card) => (<Card
-          key={card._id}
-          card={card}
-          onCardClick={onCardClick}
-          onTrashClick={onTrashClick}
+        key={card._id}
+        card={card}
+        onCardClick={onCardClick}
+        onTrashClick={onTrashClick}
       />))}
     </section>
   </>)
