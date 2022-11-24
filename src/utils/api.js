@@ -26,6 +26,15 @@ class Api {
     return this._request(`${this._url}${path}`, {headers: this._headers})
   };
 
+  changeLikeCardStatus(id, isLiked) {
+    if (isLiked) {
+      return this.removeServerLike(id);
+    } else {
+      return this.setServerLike(id);
+    }
+
+  }
+
   editServerProfileInfo(data, path) {
     return this._request(`${this._url}${path}`, {
       method: "PATCH", headers: this._headers, body: JSON.stringify({
@@ -49,13 +58,13 @@ class Api {
   };
 
   setServerLike(cardId) {
-    return this._request(`${this._url}/cards/${cardId}` + "/likes", {
+    return this._request(`${this._url}/cards/${cardId}/likes`, {
       method: "PUT", headers: this._headers,
     })
   }
 
   removeServerLike(cardId) {
-    return this._request(`${this._url}/cards/${cardId}` + "/likes", {
+    return this._request(`${this._url}/cards/${cardId}/likes`, {
       method: "DELETE", headers: this._headers,
     })
   }

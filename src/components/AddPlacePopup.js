@@ -1,15 +1,30 @@
 import PopupWithForm from './PopupWithForm'
+import React from 'react'
 
-function AddPlacePopup({isOpen, onClose}) {
+function AddPlacePopup({isOpen, onClose,onAddCard}) {
+  const [namePlace, setNamePlace] = React.useState('');
+  const [link, setLink] = React.useState('');
+
+  function handleSubmit(e) {
+  e.preventDefault();
+  onAddCard({
+    name: namePlace,
+    link: link,
+  });
+}
+
   return (<PopupWithForm
     name='editAddForm'
     id='popupAddCard'
     title='Новое место'
     textOnButton='Создать'
+    onSubmit={handleSubmit}
     isOpen={isOpen}
     onClose={onClose}
   >
     <input
+      value={namePlace}
+      onChange={e => setNamePlace(e.target.value)}
       type="text"
       id="inputAddPlace"
       name="name"
@@ -20,6 +35,8 @@ function AddPlacePopup({isOpen, onClose}) {
       required/>
     <span className="popup__input" id="inputAddPlace-error"/>
     <input
+      value={link}
+      onChange={e => setLink(e.target.value)}
       type="url"
       id="inputAddLink"
       name="link"
