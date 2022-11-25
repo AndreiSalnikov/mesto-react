@@ -15,10 +15,12 @@ import {cardsPath, userPath} from '../utils/utils';
 function App() {
 
   const [selectedCard, setSelectedCard] = React.useState(null)
+  const [cardForDelete, setCardForDelete] = React.useState(null)
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false)
   const [isConfirmPopupOpen, setConfirmPopupOpen] = React.useState(false)
+  const [isLoading, setIsLoading] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({
     name: "Загрузка...",
     about: "Загрузка...",
@@ -34,25 +36,39 @@ function App() {
   }, [])
 
   function handleAddPlaceSubmit(data) {
+    setIsLoading(true);
     api.addServerCard(data, cardsPath).then((newCard) => {
       setCards([newCard, ...cards]);
       closeAllPopups()
-    }).catch((err) => console.log(err))
+    }).catch((err) => console.log(err)).finally(()=>setIsLoading(false))
   }
+
+    function handleUpdateAvatar(data) {
+    setIsLoading(true);
+    api.setServerAvatar(data, userPath).then((data) => {
+      setCurrentUser(data)
+      closeAllPopups()
+    }).catch((err) => console.log(err)).finally(()=>setIsLoading(false))
+  }
+
+
 
   function handleUpdateUser(data) {
-    api.editServerProfileInfo(data, userPath).then(() => {
+    setIsLoading(true);
+    api.editServerProfileInfo(data, userPath).then((data) => {
       setCurrentUser(data);
       closeAllPopups()
-    }).catch((err) => console.log(err))
+    }).catch((err) => console.log(err)).finally(()=>setIsLoading(false))
   }
 
-  function handleCardDelete(card, cardsPath) {
+  function handleCardDelete(card) {
+    setIsLoading(true);
     api.deleteServerCard(card._id, cardsPath).then(() => {
       setCards((state) => state.filter((c) => {
         return c._id !== card._id
       }))
-    }).catch((err) => console.log(err))
+      closeAllPopups();
+    }).catch((err) => console.log(err)).finally(()=>setIsLoading(false))
   }
 
 
@@ -79,7 +95,8 @@ function App() {
     setAddPlacePopupOpen(true);
   }
 
-  function handleConfirmPopupClick() {
+  function handleConfirmPopupClick(card) {
+    setCardForDelete(card)
     setConfirmPopupOpen(true);
   }
 
@@ -94,11 +111,9 @@ function App() {
   return (
       <>
         <CurrentUserContext.Provider value={currentUser}>
-
           <CardsContext.Provider value={cards}>
             <Header/>
             <Main
-                onCardDelete={handleCardDelete}
                 onCardLike={handleCardLike}
                 onEditProfile={handleEditProfileClick}
                 onAddPlace={handleAddPlaceClick}
@@ -108,16 +123,20 @@ function App() {
             />
 
             <EditProfilePopup
+                isLoading={isLoading}
                 onUpdateUser={handleUpdateUser}
                 isOpen={isEditProfilePopupOpen}
                 onClose={closeAllPopups}
             />
             <AddPlacePopup
+                isLoading={isLoading}
                 onAddCard={handleAddPlaceSubmit}
                 isOpen={isAddPlacePopupOpen}
                 onClose={closeAllPopups}
             />
             <EditAvatarPopup
+                isLoading={isLoading}
+                onUpdateAvatar={handleUpdateAvatar}
                 isOpen={isEditAvatarPopupOpen}
                 onClose={closeAllPopups}
             />
@@ -126,6 +145,9 @@ function App() {
                 onClose={closeAllPopups}>
             </ImagePopup>
             <ConfirmPopup
+                isLoading={isLoading}
+                card={cardForDelete}
+                onCardDelete={handleCardDelete}
                 isOpen={isConfirmPopupOpen}
                 onClose={closeAllPopups}
             >

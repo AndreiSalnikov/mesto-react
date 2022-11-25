@@ -5,7 +5,7 @@ import CardsContext from "../contexts/CardsContext";
 import Card from "./Card";
 
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashClick, onCardLike,onCardDelete}) {
+function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashClick, onCardLike}) {
   const currentUser = React.useContext(CurrentUserContext);
   const cards = React.useContext(CardsContext);
 
@@ -32,7 +32,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, onTrashClic
         card={card}
         onCardClick={onCardClick}
         onTrashClick={onTrashClick}
-        onCardDelete={onCardDelete}
       />))}
     </section>
   </>)

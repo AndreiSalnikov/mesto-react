@@ -1,7 +1,7 @@
 import PopupWithForm from './PopupWithForm'
 import React from 'react'
 
-function AddPlacePopup({isOpen, onClose,onAddCard}) {
+function AddPlacePopup({isOpen, onClose,onAddCard,isLoading}) {
   const [namePlace, setNamePlace] = React.useState('');
   const [link, setLink] = React.useState('');
 
@@ -17,6 +17,8 @@ function AddPlacePopup({isOpen, onClose,onAddCard}) {
     name='editAddForm'
     id='popupAddCard'
     title='Новое место'
+    isLoading={isLoading}
+    textLoad='Сохранение...'
     textOnButton='Создать'
     onSubmit={handleSubmit}
     isOpen={isOpen}
