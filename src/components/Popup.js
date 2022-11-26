@@ -1,8 +1,8 @@
-import React from "react";
+import {useEffect} from "react";
 
 function Popup({isOpen, card, onClose, children, id}) {
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpen || card) {
       function handleEsc(evt) {
         if (evt.key === 'Escape') {

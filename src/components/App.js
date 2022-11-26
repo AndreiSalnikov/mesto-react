@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState, useEffect} from 'react'
 import Header from "./Header";
 import Main from "./Main";
 import EditProfilePopup from "./EditProfilePopup";
@@ -14,21 +14,21 @@ import {cardsPath, userPath} from '../utils/utils';
 
 function App() {
 
-  const [selectedCard, setSelectedCard] = React.useState(null)
-  const [cardForDelete, setCardForDelete] = React.useState(null)
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false)
-  const [isConfirmPopupOpen, setConfirmPopupOpen] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState({
+  const [selectedCard, setSelectedCard] = useState(null)
+  const [cardForDelete, setCardForDelete] = useState(null)
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false)
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false)
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false)
+  const [isConfirmPopupOpen, setConfirmPopupOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState({
     name: "Загрузка...",
     about: "Загрузка...",
     avatar: "https://www.meme-arsenal.com/memes/9836e485f044f8566194374d7566cfe8.jpg"
   })
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getServerInfo(userPath), api.getServerInfo(cardsPath)]).then(([userData, cards]) => {
       setCurrentUser(userData);
       setCards(cards);
@@ -51,7 +51,6 @@ function App() {
     }).catch((err) => console.log(err)).finally(() => setIsLoading(false))
   }
 
-
   function handleUpdateUser(data) {
     setIsLoading(true);
     api.editServerProfileInfo(data, userPath).then((data) => {
@@ -69,7 +68,6 @@ function App() {
       closeAllPopups();
     }).catch((err) => console.log(err)).finally(() => setIsLoading(false))
   }
-
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -108,53 +106,52 @@ function App() {
   }
 
   return (
-    <>
-      <CurrentUserContext.Provider value={currentUser}>
-        <CardsContext.Provider value={cards}>
-          <Header/>
-          <Main
-            onCardLike={handleCardLike}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            onTrashClick={handleConfirmPopupClick}
-          />
+    <CurrentUserContext.Provider value={currentUser}>
+      <CardsContext.Provider value={cards}>
+        <Header/>
+        <Main
+          onCardLike={handleCardLike}
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onEditAvatar={handleEditAvatarClick}
+          onCardClick={handleCardClick}
+          onTrashClick={handleConfirmPopupClick}
+        />
 
-          <EditProfilePopup
-            isLoading={isLoading}
-            onUpdateUser={handleUpdateUser}
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}
-          />
-          <AddPlacePopup
-            isLoading={isLoading}
-            onAddCard={handleAddPlaceSubmit}
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}
-          />
-          <EditAvatarPopup
-            isLoading={isLoading}
-            onUpdateAvatar={handleUpdateAvatar}
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-          />
-          <ImagePopup
-            card={selectedCard}
-            onClose={closeAllPopups}>
-          </ImagePopup>
-          <ConfirmPopup
-            isLoading={isLoading}
-            card={cardForDelete}
-            onCardDelete={handleCardDelete}
-            isOpen={isConfirmPopupOpen}
-            onClose={closeAllPopups}
-          >
-          </ConfirmPopup>
-          <Footer/>
-        </CardsContext.Provider>
-      </CurrentUserContext.Provider>
-    </>)
+        <EditProfilePopup
+          isLoading={isLoading}
+          onUpdateUser={handleUpdateUser}
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+        />
+        <AddPlacePopup
+          isLoading={isLoading}
+          onAddCard={handleAddPlaceSubmit}
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+        />
+        <EditAvatarPopup
+          isLoading={isLoading}
+          onUpdateAvatar={handleUpdateAvatar}
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+        />
+        <ImagePopup
+          card={selectedCard}
+          onClose={closeAllPopups}>
+        </ImagePopup>
+        <ConfirmPopup
+          isLoading={isLoading}
+          card={cardForDelete}
+          onCardDelete={handleCardDelete}
+          isOpen={isConfirmPopupOpen}
+          onClose={closeAllPopups}
+        >
+        </ConfirmPopup>
+        <Footer/>
+      </CardsContext.Provider>
+    </CurrentUserContext.Provider>
+  )
 }
 
 export default App;

@@ -20,7 +20,6 @@ function ConfirmPopup({isOpen, onClose, onCardDelete, card, isLoading}) {
       onSubmit={handleSubmit}
     >
     </PopupWithForm>
-
   )
 }
 

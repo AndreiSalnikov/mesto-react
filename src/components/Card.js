@@ -1,8 +1,8 @@
-import React from 'react'
+import {useContext} from 'react'
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function Card({card, onCardClick, onTrashClick, onCardLike}) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner._id === currentUser._id;
   const isLiked = card.likes.some(i => i._id === currentUser._id);
   const cardLikeButtonClassName = (
@@ -21,10 +21,6 @@ function Card({card, onCardClick, onTrashClick, onCardLike}) {
     onCardLike(card);
   }
 
-
-  if (isOwn) {
-    console.log(card.owner._id)
-  }
   return (
     <article className="item">
       {isOwn && <button className="item__delete-img" id="trash" onClick={handleTrashClick}></button>}
