@@ -6,10 +6,10 @@ function Card({card, onCardClick, onTrashClick, onCardLike}) {
   const isOwn = card.owner._id === currentUser._id;
   const isLiked = card.likes.some(i => i._id === currentUser._id);
   const cardLikeButtonClassName = (
-      `${isLiked ? 'item__icon item__icon_active' : 'item__icon'}`
+    `${isLiked ? 'item__icon item__icon_active' : 'item__icon'}`
   );
 
-    function handleTrashClick() {
+  function handleTrashClick() {
     onTrashClick(card);
   }
 
@@ -22,19 +22,21 @@ function Card({card, onCardClick, onTrashClick, onCardLike}) {
   }
 
 
-  if(isOwn){console.log(card.owner._id)}
+  if (isOwn) {
+    console.log(card.owner._id)
+  }
   return (
-      <article className="item">
-    {isOwn && <button className="item__delete-img" id="trash" onClick={handleTrashClick}></button>}
-    <img src={card.link} id="photoGridImg" className="item__img" alt="картинка" onClick={handleCardClick}/>
-    <div className="item__group-icon">
-      <h2 className="item__text">{card.name}</h2>
-      <div className="item__like-container">
-        <button className={cardLikeButtonClassName} id="like" onClick={handleLikeClick}></button>
-        <div className="item__like-counter">{card.likes.length}</div>
+    <article className="item">
+      {isOwn && <button className="item__delete-img" id="trash" onClick={handleTrashClick}></button>}
+      <img src={card.link} id="photoGridImg" className="item__img" alt="картинка" onClick={handleCardClick}/>
+      <div className="item__group-icon">
+        <h2 className="item__text">{card.name}</h2>
+        <div className="item__like-container">
+          <button className={cardLikeButtonClassName} id="like" onClick={handleLikeClick}></button>
+          <div className="item__like-counter">{card.likes.length}</div>
+        </div>
       </div>
-    </div>
-  </article>)
+    </article>)
 }
 
 export default Card;

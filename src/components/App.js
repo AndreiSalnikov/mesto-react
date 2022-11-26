@@ -40,17 +40,16 @@ function App() {
     api.addServerCard(data, cardsPath).then((newCard) => {
       setCards([newCard, ...cards]);
       closeAllPopups()
-    }).catch((err) => console.log(err)).finally(()=>setIsLoading(false))
+    }).catch((err) => console.log(err)).finally(() => setIsLoading(false))
   }
 
-    function handleUpdateAvatar(data) {
+  function handleUpdateAvatar(data) {
     setIsLoading(true);
     api.setServerAvatar(data, userPath).then((data) => {
       setCurrentUser(data)
       closeAllPopups()
-    }).catch((err) => console.log(err)).finally(()=>setIsLoading(false))
+    }).catch((err) => console.log(err)).finally(() => setIsLoading(false))
   }
-
 
 
   function handleUpdateUser(data) {
@@ -58,7 +57,7 @@ function App() {
     api.editServerProfileInfo(data, userPath).then((data) => {
       setCurrentUser(data);
       closeAllPopups()
-    }).catch((err) => console.log(err)).finally(()=>setIsLoading(false))
+    }).catch((err) => console.log(err)).finally(() => setIsLoading(false))
   }
 
   function handleCardDelete(card) {
@@ -68,7 +67,7 @@ function App() {
         return c._id !== card._id
       }))
       closeAllPopups();
-    }).catch((err) => console.log(err)).finally(()=>setIsLoading(false))
+    }).catch((err) => console.log(err)).finally(() => setIsLoading(false))
   }
 
 
@@ -109,53 +108,53 @@ function App() {
   }
 
   return (
-      <>
-        <CurrentUserContext.Provider value={currentUser}>
-          <CardsContext.Provider value={cards}>
-            <Header/>
-            <Main
-                onCardLike={handleCardLike}
-                onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-                onEditAvatar={handleEditAvatarClick}
-                onCardClick={handleCardClick}
-                onTrashClick={handleConfirmPopupClick}
-            />
+    <>
+      <CurrentUserContext.Provider value={currentUser}>
+        <CardsContext.Provider value={cards}>
+          <Header/>
+          <Main
+            onCardLike={handleCardLike}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            onTrashClick={handleConfirmPopupClick}
+          />
 
-            <EditProfilePopup
-                isLoading={isLoading}
-                onUpdateUser={handleUpdateUser}
-                isOpen={isEditProfilePopupOpen}
-                onClose={closeAllPopups}
-            />
-            <AddPlacePopup
-                isLoading={isLoading}
-                onAddCard={handleAddPlaceSubmit}
-                isOpen={isAddPlacePopupOpen}
-                onClose={closeAllPopups}
-            />
-            <EditAvatarPopup
-                isLoading={isLoading}
-                onUpdateAvatar={handleUpdateAvatar}
-                isOpen={isEditAvatarPopupOpen}
-                onClose={closeAllPopups}
-            />
-            <ImagePopup
-                card={selectedCard}
-                onClose={closeAllPopups}>
-            </ImagePopup>
-            <ConfirmPopup
-                isLoading={isLoading}
-                card={cardForDelete}
-                onCardDelete={handleCardDelete}
-                isOpen={isConfirmPopupOpen}
-                onClose={closeAllPopups}
-            >
-            </ConfirmPopup>
-            <Footer/>
-          </CardsContext.Provider>
-        </CurrentUserContext.Provider>
-      </>)
+          <EditProfilePopup
+            isLoading={isLoading}
+            onUpdateUser={handleUpdateUser}
+            isOpen={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+          />
+          <AddPlacePopup
+            isLoading={isLoading}
+            onAddCard={handleAddPlaceSubmit}
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+          />
+          <EditAvatarPopup
+            isLoading={isLoading}
+            onUpdateAvatar={handleUpdateAvatar}
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+          />
+          <ImagePopup
+            card={selectedCard}
+            onClose={closeAllPopups}>
+          </ImagePopup>
+          <ConfirmPopup
+            isLoading={isLoading}
+            card={cardForDelete}
+            onCardDelete={handleCardDelete}
+            isOpen={isConfirmPopupOpen}
+            onClose={closeAllPopups}
+          >
+          </ConfirmPopup>
+          <Footer/>
+        </CardsContext.Provider>
+      </CurrentUserContext.Provider>
+    </>)
 }
 
 export default App;

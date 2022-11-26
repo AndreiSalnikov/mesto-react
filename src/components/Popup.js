@@ -16,7 +16,7 @@ function Popup({isOpen, card, onClose, children, id}) {
         document.removeEventListener('keydown', handleEsc);
       }
     }
-  }, [isOpen, onClose,card]);
+  }, [isOpen, onClose, card]);
 
   const closePopupOverlay = (event) => {
     if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close-button')) {
@@ -25,11 +25,11 @@ function Popup({isOpen, card, onClose, children, id}) {
   }
 
   return (<div
-      className={`popup popup_overlay_black ${isOpen || card ? 'popup_opened' : ''}`}
-      id={id}
-      onClick={closePopupOverlay}>
-      {children}
-    </div>)
+    className={`popup popup_overlay_black ${isOpen || card ? 'popup_opened' : ''}`}
+    id={id}
+    onClick={closePopupOverlay}>
+    {children}
+  </div>)
 
 }
 

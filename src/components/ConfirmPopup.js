@@ -7,18 +7,19 @@ function ConfirmPopup({isOpen, onClose, onCardDelete, card, isLoading}) {
     onCardDelete(card);
   }
 
-  return (<PopupWithForm
-          name='editProfileForm'
-          id='popupDelete'
-          title='Вы уверены?'
-          isLoading={isLoading}
-          textLoad='Удаление...'
-          textOnButton='Да'
-          isOpen={isOpen}
-          onClose={onClose}
-          onSubmit={handleSubmit}
-      >
-      </PopupWithForm>
+  return (
+    <PopupWithForm
+      name='editProfileForm'
+      id='popupDelete'
+      title='Вы уверены?'
+      isLoading={isLoading}
+      textLoad='Удаление...'
+      textOnButton='Да'
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+    >
+    </PopupWithForm>
 
   )
 }

@@ -1,17 +1,17 @@
 import PopupWithForm from './PopupWithForm'
 import React from 'react'
 
-function AddPlacePopup({isOpen, onClose,onAddCard,isLoading}) {
+function AddPlacePopup({isOpen, onClose, onAddCard, isLoading}) {
   const [namePlace, setNamePlace] = React.useState('');
   const [link, setLink] = React.useState('');
 
   function handleSubmit(e) {
-  e.preventDefault();
-  onAddCard({
-    name: namePlace,
-    link: link,
-  });
-}
+    e.preventDefault();
+    onAddCard({
+      name: namePlace,
+      link: link,
+    });
+  }
 
   return (<PopupWithForm
     name='editAddForm'
@@ -48,6 +48,5 @@ function AddPlacePopup({isOpen, onClose,onAddCard,isLoading}) {
     <span className="popup__input" id="inputAddLink-error"/>
   </PopupWithForm>)
 }
-
 
 export default AddPlacePopup;
